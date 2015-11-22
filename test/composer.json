@@ -1,0 +1,8 @@
+{
+  "require": {
+    "monolog/monolog": "^1.10",
+    "doctrine/dbal": "^2.3",
+    "phpunit/phpunit": "^4.5",
+    "swiftmailer/swiftmailer": "^5.0"
+  }
+}
