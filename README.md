@@ -56,6 +56,12 @@ Climb executable binary.
 
 In case you do not provide climb binary path you need to have it on PATH environment variable otherwise plugin will raise an error
 
+#### directory
+Type: `String`
+Default value: `undefined`
+
+Path to directory containing composer files (composer.json and composer.lock).
+
 ### Usage Example
 
 ```js
@@ -63,8 +69,9 @@ grunt.initConfig({
   climb: {
     all {
       options: {
-        climb: 'path/to/climb'
-      }
+        bin: 'vendor/bin/climb'
+      },
+      directory: './test'
     }
   },
 });

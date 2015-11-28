@@ -20,7 +20,14 @@ module.exports = function(grunt) {
       bin: 'climb'
     });
 
-    cmd = path.normalize(config.bin) + ' outdated';
+    if (this.data.directory === undefined) {
+      this.data.directory = './';
+    } else if (!grunt.file.isDir(this.data.directory)) {
+      grunt.verbose.error();
+      grunt.fail.warn('Path "' + this.data.directory + '" should be a directory.');
+    }
+
+    cmd = path.normalize(config.bin) + ' outdated --directory=' + this.data.directory;
 
     grunt.log.writeln('Starting climb (target: ' + this.target.cyan + ')');
     grunt.verbose.writeln('Execute: ' + cmd);
