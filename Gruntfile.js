@@ -37,6 +37,9 @@ module.exports = function(grunt) {
         bin: 'vendor/bin/climb'
       },
       command: {
+        options: {
+          output: 'test/'
+        },
         directory: 'test/'
       }
     }

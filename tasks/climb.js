@@ -13,21 +13,36 @@ var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
   grunt.registerMultiTask('climb', 'Grunt climb tool runner', function() {
-    var cmd = null;
-    var done = null;
+    var cmd = null,
+      done = null,
+      config = this.options({
+        bin: 'climb'
+      });
 
-    var config = this.options({
-      bin: 'climb'
-    });
-
-    if (this.data.directory === undefined) {
-      this.data.directory = './';
-    } else if (!grunt.file.isDir(this.data.directory)) {
+    if (this.data.directory !== undefined && !grunt.file.isDir(this.data.directory)) {
       grunt.verbose.error();
       grunt.fail.warn('Path "' + this.data.directory + '" should be a directory.');
     }
 
-    cmd = path.normalize(config.bin) + ' outdated --directory=' + this.data.directory;
+    if (config.output !== undefined) {
+      config.output = path.normalize(config.output).replace(/\\$/, '');
+
+      if (!grunt.file.exists(config.output)) {
+        grunt.verbose.error();
+        grunt.fail.warn('Output directory "' + config.output + '" not found.');
+      }
+
+      if (!grunt.file.isPathInCwd(config.output)) {
+        grunt.verbose.error();
+        grunt.fail.warn('Cannot output to a directory outside the current working directory.');
+      }
+    }
+
+    cmd = path.normalize(config.bin) + ' outdated';
+
+    if (this.data.directory !== undefined) {
+      cmd += ' --directory=' + this.data.directory;
+    }
 
     grunt.log.writeln('Starting climb (target: ' + this.target.cyan + ')');
     grunt.verbose.writeln('Execute: ' + cmd);
@@ -39,7 +54,14 @@ module.exports = function(grunt) {
         grunt.fatal(err);
       }
 
-      grunt.log.writeln(stdout);
+      if (config.output === undefined) {
+        grunt.log.writeln(stdout);
+      } else {
+        var outputFile = config.output + '/climb-output';
+
+        grunt.file.write(outputFile, stdout);
+        grunt.log.writeln('Generating output file ' + outputFile);
+      }
 
       return done();
     });

@@ -56,6 +56,14 @@ Climb executable binary.
 
 In case you do not provide climb binary path you need to have it on PATH environment variable otherwise plugin will raise an error
 
+#### options.output
+Type: `String`
+Default value: `undefined`
+
+Output path to save climb report.
+
+Output file name will be climb-output
+
 #### directory
 Type: `String`
 Default value: `undefined`
