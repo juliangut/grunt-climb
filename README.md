@@ -77,7 +77,8 @@ grunt.initConfig({
   climb: {
     all {
       options: {
-        bin: 'vendor/bin/climb'
+        bin: 'vendor/bin/climb',
+        output: 'path/to/output'
       },
       directory: './test'
     }
