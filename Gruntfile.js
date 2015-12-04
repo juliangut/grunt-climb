@@ -34,11 +34,21 @@ module.exports = function(grunt) {
 
     climb: {
       options: {
-        bin: 'vendor/bin/climb'
+        bin: 'vendor/bin/climb',
+        output: 'test'
       },
-      command: {
+      defaults: {
+        directory: 'test/'
+      },
+      no_outdated: {
         options: {
-          output: 'test/'
+          outdated: true
+        },
+        directory: 'test/'
+      },
+      no_upgradable: {
+        options: {
+          upgradable: true
         },
         directory: 'test/'
       }

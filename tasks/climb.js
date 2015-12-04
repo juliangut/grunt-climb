@@ -12,6 +12,11 @@ var path = require('path');
 var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
+  var flags = {
+    outdated: 'outdated',
+    upgradable: 'upgradable'
+  };
+
   grunt.registerMultiTask('climb', 'Grunt climb tool runner', function() {
     var cmd = null,
       done = null,
@@ -42,6 +47,12 @@ module.exports = function(grunt) {
 
     if (this.data.directory !== undefined) {
       cmd += ' --directory=' + this.data.directory;
+    }
+
+    for (var flag in flags) {
+      if (config[flag] !== undefined && config[flag] !== false) {
+        cmd += ' --' + flags[flag];
+      }
     }
 
     grunt.log.writeln('Starting climb (target: ' + this.target.cyan + ')');

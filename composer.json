@@ -1,5 +1,5 @@
 {
     "require-dev": {
-        "vinkla/climb": "^0.7"
+      "vinkla/climb": "dev-master"
     }
 }
