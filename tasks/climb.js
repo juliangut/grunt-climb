@@ -55,16 +55,16 @@ module.exports = function(grunt) {
       }
     }
 
+    if (config.exclude !== undefined) {
+      cmd += ' --exclude=' + config.exclude.join(',');
+    }
+
     grunt.log.writeln('Starting climb (target: ' + this.target.cyan + ')');
     grunt.verbose.writeln('Execute: ' + cmd);
 
     done = this.async();
 
     return exec(cmd, function(err, stdout) {
-      if (err) {
-        grunt.fatal(err);
-      }
-
       if (config.output === undefined) {
         grunt.log.writeln(stdout);
       } else {
@@ -72,6 +72,10 @@ module.exports = function(grunt) {
 
         grunt.file.write(outputFile, stdout);
         grunt.log.writeln('Generating output file ' + outputFile);
+      }
+
+      if (err) {
+        grunt.fatal(err);
       }
 
       return done();

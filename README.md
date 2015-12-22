@@ -5,9 +5,12 @@
 
 # climb Grunt plugin
 
-> Grunt plugin for running [climb](https://github.com/vinkla/climb)
+Grunt plugin for running [climb](https://github.com/vinkla/climb)
+
+> This plugin requires vinkla/climb:~0.8
 
 ## Getting Started
+
 This plugin requires Grunt `~0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
@@ -40,7 +43,7 @@ grunt.initConfig({
       // Task-specific options go here.
     },
     your_target: {
-      // Target-specific file lists and/or options go here.
+      // Target-specific options go here.
     },
   },
 });
@@ -64,6 +67,24 @@ Output path to save climb report.
 
 Output file name will be climb-output
 
+#### options.outdated
+Type: `Boolean`
+Default value: `false`
+
+Only check for outdated packages.
+
+#### options.upgradable
+Type: `Boolean`
+Default value: `false`
+
+Only check for upgradable packages.
+
+#### options.exclude
+Type: `Array`
+Default value: `undefined`
+
+List of packages to be excluded from check.
+
 #### directory
 Type: `String`
 Default value: `undefined`
@@ -78,9 +99,13 @@ grunt.initConfig({
     all {
       options: {
         bin: 'vendor/bin/climb',
+        exclude: [
+          'vinkla/climb'
+        ],
+        outdated: true,
         output: 'path/to/output'
       },
-      directory: './test'
+      directory: 'path/to/composer/files'
     }
   },
 });
