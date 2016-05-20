@@ -12,12 +12,20 @@ var path = require('path');
 var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
+  var attributes = {
+    exclude: 'exclude'
+  };
+  var flags = {
+    onlyOutdated: 'outdated',
+    onlyUpgradable: 'upgradable'
+  };
+
   grunt.registerMultiTask('climb', 'Grunt climb tool runner', function() {
-    var cmd = null,
-      done = null,
-      config = this.options({
-        bin: 'climb'
-      });
+    var cmd = null;
+    var done = null;
+    var config = this.options({
+      bin: 'climb'
+    });
 
     if (this.data.directory !== undefined && !grunt.file.isDir(this.data.directory)) {
       grunt.verbose.error();
@@ -44,23 +52,33 @@ module.exports = function(grunt) {
       cmd += ' --directory=' + this.data.directory;
     }
 
+    for (var attribute in attributes) {
+      if (config[attribute] !== undefined) {
+        cmd += ' --' + attributes[attribute] + '=' + config[attribute];
+      }
+    }
+
+    for (var flag in flags) {
+      if (config[flag] === true) {
+        cmd += ' --' + flags[flag];
+      }
+    }
+
     grunt.log.writeln('Starting climb (target: ' + this.target.cyan + ')');
     grunt.verbose.writeln('Execute: ' + cmd);
 
     done = this.async();
 
     return exec(cmd, function(err, stdout) {
-      if (err) {
-        grunt.fatal(err);
-      }
-
-      if (config.output === undefined) {
-        grunt.log.writeln(stdout);
-      } else {
+      if (config.output !== undefined) {
         var outputFile = config.output + '/climb-output';
 
         grunt.file.write(outputFile, stdout);
         grunt.log.writeln('Generating output file ' + outputFile);
+      }
+
+      if (err) {
+        grunt.fatal(err);
       }
 
       return done();

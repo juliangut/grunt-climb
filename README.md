@@ -7,8 +7,10 @@
 
 > Grunt plugin for running [climb](https://github.com/vinkla/climb)
 
+Be aware that vinkla/climb has been discontinued due to `outdated` discovery capability has been added directly to [Composer](https://getcomposer.org/doc/03-cli.md#outdated)
+
 ## Getting Started
-This plugin requires Grunt `~0.4.0`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -64,6 +66,24 @@ Output path to save climb report.
 
 Output file name will be climb-output
 
+#### options.exclude
+Type: `String`
+Default value: `undefined`
+
+List of comma separated packages to be excluded from the check.
+
+#### options.onlyOutdated
+Type: `Boolean`
+Default value: `false`
+
+Only check outdated dependencies.
+
+#### options.onlyUpgradable
+Type: `Boolean`
+Default value: `false`
+
+Only check upgradable dependencies.
+
 #### directory
 Type: `String`
 Default value: `undefined`
@@ -78,7 +98,8 @@ grunt.initConfig({
     all {
       options: {
         bin: 'vendor/bin/climb',
-        output: 'path/to/output'
+        output: 'path/to/output',
+        onlyOutdated: true
       },
       directory: './test'
     }

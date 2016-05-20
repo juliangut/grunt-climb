@@ -9,12 +9,28 @@
 'use strict';
 
 module.exports = function(grunt) {
+  require('time-grunt')(grunt);
+  require('jit-grunt')(grunt);
+
+  grunt.loadTasks('tasks');
+
   grunt.initConfig({
     jshint: {
       options: {
         jshintrc: '.jshintrc'
       },
       all: [
+        'Gruntfile.js',
+        'tasks/**/*.js'
+      ]
+    },
+
+    jscs: {
+      options: {
+        config: '.jscsrc',
+        verbose: true
+      },
+      application: [
         'Gruntfile.js',
         'tasks/**/*.js'
       ]
@@ -36,20 +52,21 @@ module.exports = function(grunt) {
       options: {
         bin: 'vendor/bin/climb'
       },
-      command: {
+      only_outdated: {
         options: {
-          output: 'test/'
+          exclude: 'phpunit/phpunit',
+          onlyOutdated: true
         },
-        directory: 'test/'
+        directory: 'test'
+      },
+      full: {
+        options: {
+          output: 'tmp'
+        },
+        directory: 'test'
       }
     }
   });
 
-  grunt.loadTasks('tasks');
-
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-mkdir');
-
-  grunt.registerTask('default', ['jshint', 'clean', 'mkdir', 'climb']);
+  grunt.registerTask('default', ['jshint', 'jscs', 'clean', 'mkdir', 'climb']);
 };
