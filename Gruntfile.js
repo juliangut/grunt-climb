@@ -50,16 +50,18 @@ module.exports = function(grunt) {
 
     climb: {
       options: {
-        bin: 'vendor/bin/climb'
+        bin: 'vendor/bin/climb',
+        exclude: [
+          'phpunit/phpunit'
+        ]
       },
       only_outdated: {
         options: {
-          exclude: 'phpunit/phpunit',
           onlyOutdated: true
         },
         directory: 'test'
       },
-      full: {
+      output: {
         options: {
           output: 'tmp'
         },

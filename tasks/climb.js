@@ -12,9 +12,6 @@ var path = require('path');
 var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
-  var attributes = {
-    exclude: 'exclude'
-  };
   var flags = {
     onlyOutdated: 'outdated',
     onlyUpgradable: 'upgradable'
@@ -52,10 +49,8 @@ module.exports = function(grunt) {
       cmd += ' --directory=' + this.data.directory;
     }
 
-    for (var attribute in attributes) {
-      if (config[attribute] !== undefined) {
-        cmd += ' --' + attributes[attribute] + '=' + config[attribute];
-      }
+    if (config.exclude !== undefined) {
+      cmd += ' --exclude=' + config.exclude.join(',');
     }
 
     for (var flag in flags) {
