@@ -2,6 +2,7 @@
 [![License](https://img.shields.io/github/license/juliangut/grunt-climb.svg?style=flat-square)](https://github.com/juliangut/grunt-climb/blob/master/LICENSE)
 
 [![Total Downloads](https://img.shields.io/npm/dt/grunt-climb.svg?style=flat-square)](https://npmjs.org/package/grunt-climb)
+[![Monthly Downloads](https://img.shields.io/npm/dm/grunt-climb.svg?style=flat-square)](https://npmjs.org/package/grunt-climb)
 
 # climb Grunt plugin
 
